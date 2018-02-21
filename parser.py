@@ -7,7 +7,7 @@ def main():
     """ main """
     tree = et.parse("test1.xml")
     root = tree.getroot()
-    dfcols = ['title', 'descript', 'origin', 'westbc', 'eastbc', 'northbc', 'southbc', 'keywords']
+    dfcols = ['Title', 'Descript', 'Origin', 'Westbc', 'Eastbc', 'Northbc', 'Southbc', 'Keywords']
     df_xml = pd.DataFrame(columns=dfcols)
     keywords = ""
     descript = ""
@@ -62,6 +62,6 @@ def main():
     #df_xml2 = pd.DataFrame([[title, descript, origin, westbc, eastbc, northbc, southbc, keywords]], columns=dfcols)
     #df_xml.append(df_xml2)
     df_xml = pd.DataFrame({'Title':[title], 'Descript':[descript], 'Origin':[origin], 'Keywords':[keywords], 'Westbc': westbc, 'Eastbc': eastbc, 'Northbc': northbc, 'Southbc': southbc})
-    df_xml.to_csv("test.csv", encoding='utf-8')
+    df_xml.to_csv("test.csv", encoding='utf-8', columns=dfcols)
 
 main()
