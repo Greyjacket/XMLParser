@@ -66,6 +66,6 @@ def main():
         df_xml_temp = pd.DataFrame({'Title':[title], 'Descript':[descript], 'Origin':[origin], 'Keywords':[keywords], 'Westbc': westbc, 'Eastbc': eastbc, 'Northbc': northbc, 'Southbc': southbc})
         df_xml = df_xml.append(df_xml_temp)
 
-    df_xml.to_csv("test.csv", encoding='utf-8', columns=dfcols)
-
+    df_xml.to_csv("output.csv", encoding='utf-8', columns=dfcols)
+    print("File written to output.csv")
 main()
