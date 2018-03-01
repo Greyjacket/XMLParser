@@ -5,7 +5,7 @@ import glob, os
 
 def main():
 
-    dfcols = ['Title', 'Descript', 'Origin', 'Westbc', 'Eastbc', 'Northbc', 'Southbc', 'Keywords']
+    dfcols = ['Title', 'Descript', 'Location', 'Origin', 'Westbc', 'Eastbc', 'Northbc', 'Southbc', 'Keywords']
     df_xml = pd.DataFrame(columns=dfcols)
     
     """ main """
@@ -22,6 +22,7 @@ def main():
         descript = ""
         origin = ""
         title = ""
+        location = ""
 
         descript = root.findall('./idinfo/descript/')
         descript = descript[0].text
@@ -61,9 +62,9 @@ def main():
                 text = kw.text
                 text = text.split()
                 text = ' '.join(text)
-                keywords = keywords + text + " "
+                location = location + text + " "
 
-        df_xml_temp = pd.DataFrame({'Title':[title], 'Descript':[descript], 'Origin':[origin], 'Keywords':[keywords], 'Westbc': westbc, 'Eastbc': eastbc, 'Northbc': northbc, 'Southbc': southbc})
+        df_xml_temp = pd.DataFrame({'Title':[title], 'Descript':[descript], 'Location':[location], 'Origin':[origin], 'Keywords':[keywords], 'Westbc': westbc, 'Eastbc': eastbc, 'Northbc': northbc, 'Southbc': southbc})
         df_xml = df_xml.append(df_xml_temp)
 
     df_xml.to_csv("output.csv", encoding='utf-8', columns=dfcols)
