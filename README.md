@@ -2,8 +2,8 @@
 
 git clone https://github.com/Greyjacket/XMLParser.git
 
-Place XML files within the directory containing the stript
+Place the XML files into a subdirectory named "XML_Files"
 
-py parser.py 
+run: py parser.py 
 
 Look for output.csv

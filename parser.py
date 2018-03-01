@@ -5,11 +5,15 @@ import glob, os
 
 def main():
 
-    dfcols = ['Title', 'Descript', 'Location', 'Origin', 'Westbc', 'Eastbc', 'Northbc', 'Southbc', 'Keywords']
+    if not (os.path.isdir('XML_Files')):
+        print ("Please create an XML_Files directory.")
+        exit()
+
+    dfcols = ['Title', 'Descript', 'Location', 'Date', 'Origin', 'Westbc', 'Eastbc', 'Northbc', 'Southbc', 'Keywords']
     df_xml = pd.DataFrame(columns=dfcols)
     
     """ main """
-    for file in glob.glob("*.xml"):
+    for file in glob.glob("XML_Files/*.xml"):
         tree = et.parse(file)
         root = tree.getroot()
         df_xml_temp = pd.DataFrame(columns=dfcols)
@@ -23,6 +27,7 @@ def main():
         origin = ""
         title = ""
         location = ""
+        date = ""
 
         descript = root.findall('./idinfo/descript/')
         descript = descript[0].text
@@ -41,6 +46,8 @@ def main():
             origin = origin[0].text
             title = stuff.findall('title')
             title = title[0].text
+            date = stuff.findall('pubdate')
+            date = date[0].text
 
         themes = root.findall('./idinfo/keywords/theme')
 
@@ -62,9 +69,11 @@ def main():
                 text = kw.text
                 text = text.split()
                 text = ' '.join(text)
-                location = location + text + " "
+                location = location + text + ", "
 
-        df_xml_temp = pd.DataFrame({'Title':[title], 'Descript':[descript], 'Location':[location], 'Origin':[origin], 'Keywords':[keywords], 'Westbc': westbc, 'Eastbc': eastbc, 'Northbc': northbc, 'Southbc': southbc})
+        location = location[:-2]
+
+        df_xml_temp = pd.DataFrame({'Title':[title], 'Descript':[descript], 'Location':[location], 'Date':[date], 'Origin':[origin], 'Keywords':[keywords], 'Westbc': westbc, 'Eastbc': eastbc, 'Northbc': northbc, 'Southbc': southbc})
         df_xml = df_xml.append(df_xml_temp)
 
     df_xml.to_csv("output.csv", encoding='utf-8', columns=dfcols)
