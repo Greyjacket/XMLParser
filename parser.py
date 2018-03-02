@@ -9,7 +9,7 @@ def main():
         print ("Please create an XML_Files directory.")
         exit()
 
-    dfcols = ['Title', 'Descript', 'Location', 'Date', 'Origin', 'Westbc', 'Eastbc', 'Northbc', 'Southbc', 'Keywords']
+    dfcols = ['Title', 'Descript', 'Location', 'Date', 'Origin', 'Westbc', 'Eastbc', 'Northbc', 'Southbc', 'Keywords', 'Filename']
     df_xml = pd.DataFrame(columns=dfcols)
     
     """ main """
@@ -28,7 +28,7 @@ def main():
         title = ""
         location = ""
         date = ""
-
+        filename = os.path.basename(file)
         descript = root.findall('./idinfo/descript/')
         descript = descript[0].text
 
@@ -73,7 +73,7 @@ def main():
 
         location = location[:-2]
 
-        df_xml_temp = pd.DataFrame({'Title':[title], 'Descript':[descript], 'Location':[location], 'Date':[date], 'Origin':[origin], 'Keywords':[keywords], 'Westbc': westbc, 'Eastbc': eastbc, 'Northbc': northbc, 'Southbc': southbc})
+        df_xml_temp = pd.DataFrame({'Title':[title], 'Descript':[descript], 'Location':[location], 'Date':[date], 'Origin':[origin], 'Keywords':[keywords], 'Westbc': westbc, 'Eastbc': eastbc, 'Northbc': northbc, 'Southbc': southbc, 'Filename': filename})
         df_xml = df_xml.append(df_xml_temp)
 
     df_xml.to_csv("output.csv", encoding='utf-8', columns=dfcols)
